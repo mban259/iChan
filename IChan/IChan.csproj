@@ -181,16 +181,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Load\LoadSettings.cs" />
+    <Compile Include="Data\Database.cs" />
+    <Compile Include="Data\Idea.cs" />
+    <Compile Include="Data\Team.cs" />
+    <Compile Include="Data\User.cs" />
+    <Compile Include="Modules\CommandManager.cs" />
     <Compile Include="Modules\CommandModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="Data\Settings.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Util\Discord\Commands.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

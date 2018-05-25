@@ -5,18 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using DotNetEnv;
 
-namespace IChan.Load
+namespace IChan
 {
-    class LoadSettings
+    class Settings
     {
-        public LoadSettings()
+        public string DiscordToken { private set; get; }
+        public Settings()
         {
             Env.Load();
         }
-
         public void GetSetting()
         {
-            Settings.DiscordToken = Env.GetString("DISCORD_TOKEN");
+            DiscordToken = Env.GetString("DISCORD_TOKEN");
         }
     }
 }

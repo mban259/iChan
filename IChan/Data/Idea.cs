@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IChan
+namespace IChan.Data
 {
-    static class Settings
+    class Idea
     {
-        static public string DiscordToken;
+        public int IdeaId;
+        public string Text;
+        public List<Team> Teams;
     }
 }

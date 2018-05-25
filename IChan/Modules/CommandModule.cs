@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Discord;
 using Discord.Commands;
 using IChan.Util.Discord;
 
@@ -28,7 +29,7 @@ namespace IChan.Modules
         [Command(Commands.Idea)]
         public async Task Idea(string text)
         {
-
+            Console.WriteLine(string.Join(" ", text));
         }
 
         /// <summary>
@@ -62,6 +63,36 @@ namespace IChan.Modules
         public async Task Complete(int ideaID)
         {
 
+        }
+
+        [Command(Commands.Help)]
+        public async Task Help(string command)
+        {
+            switch (command)
+            {
+                case Commands.Help:
+                    break;
+                case Commands.Complete:
+                    break;
+                case Commands.CreateTeam:
+                    break;
+                case Commands.Idea:
+                    break;
+                case Commands.JoinTeam:
+                    break;
+                case Commands.Ping:
+                    break;
+                case Commands.Prefix:
+                    break;
+                default:
+                    Console.WriteLine("Help");
+                    break;
+            }
+        }
+        [Command(Commands.Help)]
+        public async Task Help()
+        {
+            Console.WriteLine("HelpHelp");
         }
     }
 }

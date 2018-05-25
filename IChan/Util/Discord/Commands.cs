@@ -8,11 +8,12 @@ namespace IChan.Util.Discord
 {
     class Commands
     {
-        public const string Prefix = "./";
+        public const string Prefix = "./ichan ";
         public const string Ping = "ping";
         public const string Idea = "idea";
         public const string CreateTeam = "teamsakusei";
         public const string JoinTeam = "teansanka";
         public const string Complete = "kansei";
+        public const string Help = "help";
     }
 }
