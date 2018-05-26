@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace IChan.Util.Discord
 {
-    class CommandUtils
+    class IdeaCommand
     {
-        public static async Task Idea(string text)
+        public async Task Idea(string text)
         {
             Console.WriteLine(text);
         }

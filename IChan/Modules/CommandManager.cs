@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using IChan.Util.Discord;
 
 namespace IChan.Modules
 {
@@ -15,6 +16,7 @@ namespace IChan.Modules
         private readonly DiscordSocketClient Client;
         private readonly CommandService Commands;
         private readonly IServiceProvider Services;
+        private readonly IdeaCommand IdeaCommand = new IdeaCommand();
         Regex IdeaRegex = new Regex($"^{Util.Discord.Commands.Prefix}{Util.Discord.Commands.Idea}(( |\n)+?)(?<text>(\\w|\\W)*)$");
 
         public CommandManager(DiscordSocketClient client, CommandService commands, IServiceProvider services)
@@ -24,13 +26,13 @@ namespace IChan.Modules
             Services = services;
         }
 
-        private async Task<bool> IdeaCommand(SocketMessage message)
+        private async Task<bool> TaskIdeaCommand(SocketMessage message)
         {
             var match = IdeaRegex.Match(message.ToString());
 
             if (match.Success)
             {
-                await Util.Discord.CommandUtils.Idea(match.Groups["text"].Value);
+                await IdeaCommand.Idea(match.Groups["text"].Value);
                 return true;
             }
 
@@ -48,7 +50,7 @@ namespace IChan.Modules
 
             if (!(message.HasStringPrefix(IChan.Util.Discord.Commands.Prefix, ref argPos))) return;
             //アイデア登録だけ正規表現で取得上手い方法だれかおしえて
-            if (await IdeaCommand(message)) return;
+            if (await TaskIdeaCommand(message)) return;
 
             var context = new CommandContext(Client, message);
             var result = await Commands.ExecuteAsync(context, argPos, Services);
