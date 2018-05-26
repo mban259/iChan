@@ -44,6 +44,7 @@ namespace IChan
             await commands.AddModulesAsync(Assembly.GetEntryAssembly());
             await DiscordStart();
             await Task.Delay(-1);
+            
         }
 
         private Task Log(LogMessage message)

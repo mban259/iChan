@@ -85,14 +85,13 @@ namespace IChan.Modules
                 case Commands.Prefix:
                     break;
                 default:
-                    Console.WriteLine("Help");
                     break;
             }
         }
         [Command(Commands.Help)]
         public async Task Help()
         {
-            Console.WriteLine("HelpHelp");
+            
         }
     }
 }
