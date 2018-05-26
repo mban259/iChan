@@ -10,6 +10,7 @@ namespace IChan.Data
     {
         public int IdeaId;
         public string Text;
+        public User Proposer;
         public List<Team> Teams;
     }
 }
