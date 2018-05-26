@@ -10,16 +10,19 @@ using System.Reflection;
 using IChan.Modules;
 using Microsoft.Extensions.DependencyInjection;
 using IChan.Util.Discord;
+using System.Data;
 
 namespace IChan
 {
     class Program
     {
+
         public DiscordSocketClient client;
         public CommandService commands;
         public IServiceProvider services;
         private Settings settings;
         private CommandManager CommandManager;
+        private DataSet data = new DataSet();
         static void Main(string[] args)
         {
             var program = new Program();
@@ -44,7 +47,7 @@ namespace IChan
             await commands.AddModulesAsync(Assembly.GetEntryAssembly());
             await DiscordStart();
             await Task.Delay(-1);
-            
+
         }
 
         private Task Log(LogMessage message)

@@ -22,5 +22,41 @@ namespace IChan.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int UnspentIdeaId {
+            get {
+                return ((int)(this["UnspentIdeaId"]));
+            }
+            set {
+                this["UnspentIdeaId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string EnableIdeas {
+            get {
+                return ((string)(this["EnableIdeas"]));
+            }
+            set {
+                this["EnableIdeas"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Ideas {
+            get {
+                return ((string)(this["Ideas"]));
+            }
+            set {
+                this["Ideas"] = value;
+            }
+        }
     }
 }

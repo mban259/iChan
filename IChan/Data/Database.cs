@@ -1,42 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Data;
 
 namespace IChan.Data
 {
-    class Database
+    static class Database
     {
-        private string Serialize<T>(T item)
+        public static Dictionary<int, Idea> EnableIdeas;
+        public static List<Idea> Ideas;
+        public static int UnspentIdeaId;
+
+        static Database()
+        {
+            EnableIdeas = Deserialize<Dictionary<int, Idea>>(Properties.Settings.Default.EnableIdeas);
+            Ideas = Deserialize<List<Idea>>(Properties.Settings.Default.Ideas);
+            UnspentIdeaId = Properties.Settings.Default.UnspentIdeaId;
+        }
+        private static string Serialize<T>(T item)
         {
             return JsonConvert.SerializeObject(item);
         }
 
-        private T Deserialize<T>(string s)
+        private static T Deserialize<T>(string s)
         {
             return JsonConvert.DeserializeObject<T>(s);
         }
 
-        public void Save<T>(T item, string path)
+        public static void SaveUnspentIdeaId()
         {
-            Save(Serialize(item), path);
+            Properties.Settings.Default.UnspentIdeaId = UnspentIdeaId;
+            Save();
         }
 
-        public T Load<T>(string path)
+        public static void SaveEnableIdeas()
         {
-            return Deserialize<T>(Load(path));
-        }
-        //あとでかく
-        private void Save(string data, string path)
-        {
-
+            Properties.Settings.Default.EnableIdeas = Serialize(EnableIdeas);
+            Save();
         }
 
-        private string Load(string path)
+        public static void SaveIdeas()
         {
-            return null;
+            Properties.Settings.Default.Ideas = Serialize(Ideas);
+            Save();
+        }
+
+        private static void Save()
+        {
+            Properties.Settings.Default.Save();
         }
     }
 }

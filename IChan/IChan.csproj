@@ -182,6 +182,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Data.cs" />
     <Compile Include="Data\Database.cs" />
     <Compile Include="Data\Idea.cs" />
     <Compile Include="Data\Team.cs" />
@@ -197,7 +198,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Util\Discord\Commands.cs" />
-    <Compile Include="Util\Discord\CommandUtils.cs" />
+    <Compile Include="Util\Discord\IdeaCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
