@@ -22,17 +22,6 @@ namespace IChan.Modules
         }
 
         /// <summary>
-        /// アイデア登録
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        [Command(Commands.Idea)]
-        public async Task Idea(string text)
-        {
-            Console.WriteLine(string.Join(" ", text));
-        }
-
-        /// <summary>
         /// チーム作成
         /// </summary>
         /// <param name="ideaId"></param>

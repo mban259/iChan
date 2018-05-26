@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -14,12 +15,26 @@ namespace IChan.Modules
         private readonly DiscordSocketClient Client;
         private readonly CommandService Commands;
         private readonly IServiceProvider Services;
+        Regex IdeaRegex = new Regex($"^{Util.Discord.Commands.Prefix}{Util.Discord.Commands.Idea}(( |\n)+?)(?<text>(\\w|\\W)*)$");
 
         public CommandManager(DiscordSocketClient client, CommandService commands, IServiceProvider services)
         {
             Client = client;
             Commands = commands;
             Services = services;
+        }
+
+        private async Task<bool> IdeaCommand(SocketMessage message)
+        {
+            var match = IdeaRegex.Match(message.ToString());
+
+            if (match.Success)
+            {
+                await Util.Discord.CommandUtils.Idea(match.Groups["text"].Value);
+                return true;
+            }
+
+            return false;
         }
 
         public async Task CommandRecieved(SocketMessage messageParam)
@@ -32,6 +47,8 @@ namespace IChan.Modules
             int argPos = 0;
 
             if (!(message.HasStringPrefix(IChan.Util.Discord.Commands.Prefix, ref argPos))) return;
+            //アイデア登録だけ正規表現で取得上手い方法だれかおしえて
+            if (await IdeaCommand(message)) return;
 
             var context = new CommandContext(Client, message);
             var result = await Commands.ExecuteAsync(context, argPos, Services);
