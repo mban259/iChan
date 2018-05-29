@@ -13,6 +13,7 @@ namespace IChan.Data
         public static ulong BoardChannelId { private set; get; }
         public static string SavedataDir { private set; get; }
         public static string SavedataFilename { private set; get; }
+        public static string IdeaDataDir { private set; get; }
         public static void GetEnv()
         {
             Env.Load();
@@ -20,6 +21,7 @@ namespace IChan.Data
             BoardChannelId = ulong.Parse(Env.GetString("BOARD_CHANNEL_ID"));
             SavedataDir = Env.GetString("SAVEDATA_DIR");
             SavedataFilename = Env.GetString("SAVEDATA_FILENAME");
+            IdeaDataDir = Env.GetString("IDEADATA_DIR");
         }
     }
 }

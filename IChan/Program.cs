@@ -25,8 +25,8 @@ namespace IChan
 
         static void Main(string[] args)
         {
-            DataManager.GetData();
             EnvManager.GetEnv();
+            DataManager.GetData();
             var program = new Program();
             program.MainAsync().GetAwaiter().GetResult();
 

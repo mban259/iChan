@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Odbc;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,13 +12,17 @@ namespace IChan.Data
     {
         public int IdeaId;
         public string Text;
-        public RestUserMessage Message;
-        public User Proposer;
-        public List<Team> Teams;
+        public ulong MessageId;
+        public User Proposer;//発案者
+        public HashSet<int> Teams;//参加してるチーム(id)
 
-        public Idea(User user, string text, int id, RestUserMessage message)
+        public Idea(User user, string text, int id, ulong messageId)
         {
-
+            IdeaId = id;
+            Text = text;
+            MessageId = messageId;
+            Proposer = user;
+            Teams = new HashSet<int>();
         }
     }
 }

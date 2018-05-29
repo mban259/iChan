@@ -8,7 +8,13 @@ namespace IChan.Data
 {
     public class Data
     {
-        public int UnspentIdeaId { get; set; }
+        public int _unspentIdeaId;
+        public int UnspentIdeaId
+        {
+            get { return _unspentIdeaId; }
+            set { _unspentIdeaId = value; }
+        }
+
         public HashSet<int> EnableIdea;
 
         public Data()

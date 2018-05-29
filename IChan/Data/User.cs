@@ -9,12 +9,12 @@ namespace IChan.Data
 {
     class User
     {
-        public IUser IUser;
+        public ulong UserId;
         public string Address;
 
-        public User(IUser user, string address)
+        public User(ulong userId, string address)
         {
-            IUser = user;
+            UserId = userId;
             Address = address;
         }
     }

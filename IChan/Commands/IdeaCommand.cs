@@ -24,18 +24,23 @@ namespace IChan.Commands
             var channel = Client.GetChannel(EnvManager.BoardChannelId) as SocketTextChannel;
             var embedBuilder = new EmbedBuilder();
             int id = DataManager.Data.UnspentIdeaId;
-            string sendText = $"{id}";
+            string sendText = $"{id} {user.Mention}";
             var sendmessage = await channel.SendMessageAsync(sendText, false, embedBuilder.Build());
-            await AddIdea(text, address, user, sendmessage, id);
+            AddIdea(text, address, user.Id, sendmessage, id);
             DataManager.Data.UnspentIdeaId++;
             DataManager.SaveData();
+            Console.WriteLine(SaveManager.LoadData("data", "data.xml").UnspentIdeaId);
         }
 
-        private async Task AddIdea(string text, string address, IUser user, RestUserMessage message, int id)
+        private void AddIdea(string text, string address, ulong userId, RestUserMessage message, int id)
         {
-            User u = new User(user, address);
-            Idea idea = new Idea(u, text, id, message);
+            User u = new User(userId, address);
+            Idea idea = new Idea(u, text, id, message.Id);
 
+            //何のエラー吐こう
+            if (!DataManager.Data.EnableIdea.Add(id)) throw new Exception();
+
+            SaveManager.Save(idea, EnvManager.IdeaDataDir, $"{id}.xml");
         }
     }
 }

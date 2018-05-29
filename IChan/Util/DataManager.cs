@@ -14,19 +14,10 @@ namespace IChan
 
         public static IChan.Data.Data Data { private set; get; }
 
-
-
         private static void GetFileData()
         {
-            try
-            {
-                Data = SaveManager.LoadData(EnvManager.SavedataDir, $"{EnvManager.SavedataFilename}.xml");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                Data = new Data.Data();
-            }
+            Data = SaveManager.LoadData(EnvManager.SavedataDir, $"{EnvManager.SavedataFilename}.json");
+
         }
         public static void GetData()
         {
@@ -35,7 +26,7 @@ namespace IChan
 
         public static void SaveData()
         {
-            SaveManager.Save(Data, EnvManager.SavedataDir, $"{EnvManager.SavedataFilename}.xml");
+            SaveManager.Save(Data, EnvManager.SavedataDir, $"{EnvManager.SavedataFilename}.json");
         }
     }
 }

@@ -22,11 +22,12 @@ namespace IChan.Data
             {
                 Directory.CreateDirectory(dir);
             }
+
             string path = $"{dir}\\{name}";
-            var serializer = new XmlSerializer(typeof(T));
-            var writer = new StreamWriter(path, false, Encoding.UTF8);
-            serializer.Serialize(writer, item);
-            writer.Close();
+            using (StreamWriter writer = new StreamWriter(path, false))
+            {
+                writer.Write(JsonConvert.SerializeObject(item));
+            }
         }
 
         public static T Load<T>(string directory, string name)
@@ -34,13 +35,11 @@ namespace IChan.Data
             string dir = $"{CurrentDirectory}\\{directory}";
 
             string path = $"{dir}\\{name}";
-
-            var serializer = new XmlSerializer(typeof(T));
             T result;
-            var reader = new StreamReader(path);
-
-            result = (T)serializer.Deserialize(reader);
-            reader.Close();
+            using (StreamReader reader = new StreamReader(path))
+            {
+                result = JsonConvert.DeserializeObject<T>(reader.ReadToEnd());
+            }
 
             return result;
         }
@@ -50,14 +49,16 @@ namespace IChan.Data
             string dir = $"{CurrentDirectory}\\{directory}";
 
             string path = $"{dir}\\{name}";
+            Data result;
             if (!File.Exists(path))
             {
-                Data result = new Data();
+                result = new Data();
                 Save(result, directory, name);
                 return result;
             }
-
-            return Load<Data>(directory, name);
+            result = Load<Data>(directory, name);
+            Console.WriteLine($"Load {result.UnspentIdeaId}");
+            return result;
         }
     }
 }
