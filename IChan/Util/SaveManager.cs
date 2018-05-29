@@ -57,7 +57,6 @@ namespace IChan.Data
                 return result;
             }
             result = Load<Data>(directory, name);
-            Console.WriteLine($"Load {result.UnspentIdeaId}");
             return result;
         }
     }
