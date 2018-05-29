@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using IChan.Data;
 using IChan.Util.Discord;
 
-namespace IChan.Modules
+namespace IChan.Commands
 {
     public class CommandModule : ModuleBase
     {
@@ -15,7 +16,7 @@ namespace IChan.Modules
         /// ぴんぽん
         /// </summary>
         /// <returns></returns>
-        [Command(Commands.Ping)]
+        [Command(CommandName.Ping)]
         public async Task Ping()
         {
             await ReplyAsync("pong");
@@ -26,7 +27,7 @@ namespace IChan.Modules
         /// </summary>
         /// <param name="ideaId"></param>
         /// <returns></returns>
-        [Command(Commands.CreateTeam)]
+        [Command(CommandName.CreateTeam)]
         public async Task CreateTeam(int ideaId)
         {
 
@@ -37,7 +38,7 @@ namespace IChan.Modules
         /// </summary>
         /// <param name="teamId"></param>
         /// <returns></returns>
-        [Command(Commands.JoinTeam)]
+        [Command(CommandName.JoinTeam)]
         public async Task JoinTeam(int teamId)
         {
 
@@ -48,39 +49,39 @@ namespace IChan.Modules
         /// </summary>
         /// <param name="ideaID"></param>
         /// <returns></returns>
-        [Command(Commands.Complete)]
+        [Command(CommandName.Complete)]
         public async Task Complete(int ideaID)
         {
 
         }
 
-        [Command(Commands.Help)]
+        [Command(CommandName.Help)]
         public async Task Help(string command)
         {
             switch (command)
             {
-                case Commands.Help:
+                case CommandName.Help:
                     break;
-                case Commands.Complete:
+                case CommandName.Complete:
                     break;
-                case Commands.CreateTeam:
+                case CommandName.CreateTeam:
                     break;
-                case Commands.Idea:
+                case CommandName.Idea:
                     break;
-                case Commands.JoinTeam:
+                case CommandName.JoinTeam:
                     break;
-                case Commands.Ping:
+                case CommandName.Ping:
                     break;
-                case Commands.Prefix:
+                case CommandName.Prefix:
                     break;
                 default:
                     break;
             }
         }
-        [Command(Commands.Help)]
+        [Command(CommandName.Help)]
         public async Task Help()
         {
-            
+
         }
     }
 }

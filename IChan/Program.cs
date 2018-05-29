@@ -7,10 +7,11 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using System.Reflection;
-using IChan.Modules;
+using IChan.Commands;
 using Microsoft.Extensions.DependencyInjection;
 using IChan.Util.Discord;
 using System.Data;
+using IChan.Data;
 
 namespace IChan
 {
@@ -20,34 +21,33 @@ namespace IChan
         public DiscordSocketClient client;
         public CommandService commands;
         public IServiceProvider services;
-        private Settings settings;
         private CommandManager CommandManager;
-        private DataSet data = new DataSet();
+
         static void Main(string[] args)
         {
+            DataManager.GetData();
+            EnvManager.GetEnv();
             var program = new Program();
             program.MainAsync().GetAwaiter().GetResult();
+
         }
 
-        public void StartUp()
+        public async Task StartUp()
         {
             client = new DiscordSocketClient();
             commands = new CommandService();
             services = new ServiceCollection().BuildServiceProvider();
-            settings = new Settings();
-            settings.GetSetting();
             CommandManager = new CommandManager(client, commands, services);
         }
 
         public async Task MainAsync()
         {
-            StartUp();
+            await StartUp();
             client.MessageReceived += CommandManager.CommandRecieved;
             client.Log += Log;
             await commands.AddModulesAsync(Assembly.GetEntryAssembly());
             await DiscordStart();
             await Task.Delay(-1);
-
         }
 
         private Task Log(LogMessage message)
@@ -58,7 +58,7 @@ namespace IChan
 
         private async Task DiscordStart()
         {
-            await client.LoginAsync(TokenType.Bot, settings.DiscordToken);
+            await client.LoginAsync(TokenType.Bot, EnvManager.DiscordToken);
             await client.StartAsync();
         }
 

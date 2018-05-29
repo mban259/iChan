@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IChan.Util.Discord
 {
-    class Commands
+    class CommandName
     {
         public const string Prefix = "./ichan ";
         public const string Ping = "ping";

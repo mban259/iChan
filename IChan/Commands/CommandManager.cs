@@ -9,21 +9,22 @@ using Discord.Commands;
 using Discord.WebSocket;
 using IChan.Util.Discord;
 
-namespace IChan.Modules
+namespace IChan.Commands
 {
     class CommandManager
     {
         private readonly DiscordSocketClient Client;
         private readonly CommandService Commands;
         private readonly IServiceProvider Services;
-        private readonly IdeaCommand IdeaCommand = new IdeaCommand();
-        Regex IdeaRegex = new Regex($"^{Util.Discord.Commands.Prefix}{Util.Discord.Commands.Idea}(( |\n)+?)(?<text>(\\w|\\W)*)$");
+        private readonly IdeaCommand IdeaCommand;
+        private readonly Regex IdeaRegex = new Regex($"^{CommandName.Prefix}{Util.Discord.CommandName.Idea}(( |\n)+?)(?<text>(\\w|\\W)*)$");
 
         public CommandManager(DiscordSocketClient client, CommandService commands, IServiceProvider services)
         {
             Client = client;
             Commands = commands;
             Services = services;
+            IdeaCommand = new IdeaCommand(client);
         }
 
         private async Task<bool> TaskIdeaCommand(SocketMessage message)
@@ -32,13 +33,14 @@ namespace IChan.Modules
 
             if (match.Success)
             {
-                await IdeaCommand.Idea(match.Groups["text"].Value);
+                await IdeaCommand.Idea(match.Groups["text"].Value, "あどれす", message.Author);
                 return true;
             }
 
             return false;
         }
 
+        //タスクキューじゃなくていいのか?
         public async Task CommandRecieved(SocketMessage messageParam)
         {
             var message = messageParam as SocketUserMessage;
@@ -48,7 +50,7 @@ namespace IChan.Modules
 
             int argPos = 0;
 
-            if (!(message.HasStringPrefix(IChan.Util.Discord.Commands.Prefix, ref argPos))) return;
+            if (!(message.HasStringPrefix(CommandName.Prefix, ref argPos))) return;
             //アイデア登録だけ正規表現で取得上手い方法だれかおしえて
             if (await TaskIdeaCommand(message)) return;
 
