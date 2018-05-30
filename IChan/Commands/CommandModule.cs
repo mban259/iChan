@@ -39,7 +39,7 @@ namespace IChan.Commands
                 int teamId = DataManager.Data.UnspentTeamId;
                 User u = new User(Context.User.Id, address);
                 var team = new Team(ideaId, teamId, u);
-                Saver.Save(team, "datas/teams", $"{teamId}.json");
+                Saver.Save(team, $"{EnvManager.TeamDataDir}", $"{teamId}.json");
 
                 await channel.SendMessageAsync($"{teamId}", false);
             }
@@ -55,9 +55,43 @@ namespace IChan.Commands
         /// <param name="teamId"></param>
         /// <returns></returns>
         [Command(CommandName.JoinTeam)]
-        public async Task JoinTeam(int teamId)
+        public async Task JoinTeam(int teamId, string address)
         {
-
+            Team t;
+            User user = new User(Context.User.Id, address);
+            if (Saver.TryLoadTeam(teamId, out t))
+            {
+                if (DataManager.Data.EnableIdea.Contains(t.IdeaId))
+                {
+                    if (Context.User.Id == t.Leader.UserId || t.Menber.Any(u => u.UserId == Context.User.Id))
+                    {
+                        await Context.Channel.SendMessageAsync("もうチーム入ってるよ！");
+                    }
+                    else
+                    {
+                        if (t.Applicants.Any(a => a.User.UserId == Context.User.Id))
+                        {
+                            await Context.Channel.SendMessageAsync("参加申請もう出してるよ！");
+                        }
+                        else
+                        {
+                            var leader = await Context.Channel.GetUserAsync(t.Leader.UserId);
+                            var sendText = await leader.SendMessageAsync($"{Context.User.Mention}さんのチームさんかしんせいだよ！");
+                            var applicant = new Applicant(user, sendText.Id);
+                            t.Applicants.Add(applicant);
+                            Saver.Save(t, EnvManager.TeamDataDir, $"{t.TeamId}.json");
+                        }
+                    }
+                }
+                else
+                {
+                    await Context.Channel.SendMessageAsync("そのちーむはもうないよ！");
+                }
+            }
+            else
+            {
+                await Context.Channel.SendMessageAsync("そんなちーむないよ！");
+            }
         }
 
         /// <summary>

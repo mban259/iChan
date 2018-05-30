@@ -31,34 +31,49 @@ namespace IChan.Utils
             }
         }
 
-        public static T Load<T>(string directory, string name)
+        public static bool TryLoad<T>(string directory, string name, out T item)
         {
             string dir = $"{CurrentDirectory}\\{directory}";
 
             string path = $"{dir}\\{name}";
-            T result;
-            using (StreamReader reader = new StreamReader(path))
+            if (File.Exists(path))
             {
-                result = JsonConvert.DeserializeObject<T>(reader.ReadToEnd());
-            }
+                using (StreamReader reader = new StreamReader(path))
+                {
+                    item = JsonConvert.DeserializeObject<T>(reader.ReadToEnd());
+                }
 
-            return result;
+                return true;
+            }
+            else
+            {
+                item = default(T);
+                return false;
+            }
         }
 
-        public static Data LoadData(string directory, string name)
+        public static bool TryLoadData(out Data data)
         {
-            string dir = $"{CurrentDirectory}\\{directory}";
+            string name = $"{EnvManager.SavedataFilename}.json";
+            string dir = $"{CurrentDirectory}\\{EnvManager.SavedataDir}";
 
-            string path = $"{dir}\\{name}";
-            Data result;
-            if (!File.Exists(path))
+            if (TryLoad(dir, name, out data))
             {
-                result = new Data();
-                Save(result, directory, name);
-                return result;
+                return true;
             }
-            result = Load<Data>(directory, name);
-            return result;
+            else
+            {
+                data = new Data();
+                Save(data, EnvManager.SavedataDir, name);
+                return false;
+            }
+        }
+
+        public static bool TryLoadTeam(int teamid, out Team team)
+        {
+            string name = $"{teamid}.json";
+            string dir = $"{CurrentDirectory}\\{EnvManager.IdeaDataDir}";
+            return TryLoad(dir, name, out team);
         }
     }
 }

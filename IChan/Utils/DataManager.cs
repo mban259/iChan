@@ -1,14 +1,17 @@
-﻿namespace IChan.Utils
+﻿using IChan.Datas;
+
+namespace IChan.Utils
 {
     static class DataManager
     {
 
-        public static IChan.Datas.Data Data { private set; get; }
+        public static Data Data { private set; get; }
 
         private static void GetFileData()
         {
-            Data = Saver.LoadData(EnvManager.SavedataDir, $"{EnvManager.SavedataFilename}.json");
-
+            Data d;
+            Saver.TryLoadData(out d);
+            Data = d;
         }
         public static void GetData()
         {
