@@ -7,7 +7,7 @@ using Discord;
 using Discord.Rest;
 using Discord.Rpc;
 using Discord.WebSocket;
-using IChan.Data;
+using IChan.Datas;
 
 namespace IChan.Commands
 {
@@ -28,8 +28,8 @@ namespace IChan.Commands
             var sendmessage = await channel.SendMessageAsync(sendText, false, embedBuilder.Build());
             AddIdea(text, address, user.Id, sendmessage, id);
             DataManager.Data.UnspentIdeaId++;
+            
             DataManager.SaveData();
-            Console.WriteLine(SaveManager.LoadData("data", "data.xml").UnspentIdeaId);
         }
 
         private void AddIdea(string text, string address, ulong userId, RestUserMessage message, int id)
@@ -40,7 +40,7 @@ namespace IChan.Commands
             //何のエラー吐こう
             if (!DataManager.Data.EnableIdea.Add(id)) throw new Exception();
 
-            SaveManager.Save(idea, EnvManager.IdeaDataDir, $"{id}.xml");
+            Saver.Save(idea, EnvManager.IdeaDataDir, $"{id}.xml");
         }
     }
 }

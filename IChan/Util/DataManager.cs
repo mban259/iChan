@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DotNetEnv;
-using IChan.Data;
+using IChan.Datas;
 using NBitcoin.Protocol;
 
 namespace IChan
@@ -12,7 +12,7 @@ namespace IChan
     static class DataManager
     {
 
-        public static IChan.Data.Data Data { private set; get; }
+        public static IChan.Datas.Data Data { private set; get; }
 
         private static void GetFileData()
         {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Discord;
 
-namespace IChan.Data
+namespace IChan.Datas
 {
     class User
     {

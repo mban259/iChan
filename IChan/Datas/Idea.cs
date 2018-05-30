@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Discord.Rest;
 
-namespace IChan.Data
+namespace IChan.Datas
 {
     class Idea
     {

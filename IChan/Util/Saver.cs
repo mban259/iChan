@@ -9,7 +9,7 @@ using System.Data;
 using System.Xml.Serialization;
 using Discord;
 
-namespace IChan.Data
+namespace IChan.Datas
 {
     static class Saver
     {

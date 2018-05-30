@@ -11,7 +11,7 @@ using IChan.Commands;
 using Microsoft.Extensions.DependencyInjection;
 using IChan.Util.Discord;
 using System.Data;
-using IChan.Data;
+using IChan.Datas;
 
 namespace IChan
 {

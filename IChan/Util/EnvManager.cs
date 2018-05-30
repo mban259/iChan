@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DotNetEnv;
 
-namespace IChan.Data
+namespace IChan.Datas
 {
     static class EnvManager
     {
