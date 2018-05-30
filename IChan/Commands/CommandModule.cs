@@ -80,6 +80,8 @@ namespace IChan.Commands
                             var applicant = new Applicant(user, sendText.Id);
                             t.Applicants.Add(applicant);
                             Saver.Save(t, EnvManager.TeamDataDir, $"{t.TeamId}.json");
+                            DataManager.Data.MonitorTextId.Add(sendText.Id);
+                            DataManager.SaveData();
                         }
                     }
                 }
@@ -102,7 +104,34 @@ namespace IChan.Commands
         [Command(CommandName.Complete)]
         public async Task Complete(int teamId)
         {
-
+            Team t;
+            if (Saver.TryLoadTeam(teamId, out t))
+            {
+                if (t.Leader.UserId == Context.User.Id)
+                {
+                    if (DataManager.Data.EnableIdea.Contains(t.IdeaId))
+                    {
+                        var channel =
+                            await Context.Client.GetChannelAsync(EnvManager.CompleteNotificationChannel) as
+                                SocketTextChannel;
+                        var message = await channel.SendMessageAsync($"{t.IdeaId}が完成したよ！");
+                        DataManager.Data.MonitorTextId.Add(message.Id);
+                        DataManager.SaveData();
+                    }
+                    else
+                    {
+                        await Context.Channel.SendMessageAsync("もうかんせいしてるよ！");
+                    }
+                }
+                else
+                {
+                    await Context.Channel.SendMessageAsync("あなたりーだーじゃないよ！");
+                }
+            }
+            else
+            {
+                await Context.Channel.SendMessageAsync("そんなちーむないよ！");
+            }
         }
 
         [Command(CommandName.Help)]

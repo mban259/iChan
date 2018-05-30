@@ -24,12 +24,14 @@ namespace IChan.Datas
         }
 
         public HashSet<int> EnableIdea;
+        public HashSet<ulong> MonitorTextId;
 
         public Data()
         {
             UnspentIdeaId = 0;
             UnspentTeamId = 0;
             EnableIdea = new HashSet<int>();
+            MonitorTextId = new HashSet<ulong>();
         }
     }
 }
