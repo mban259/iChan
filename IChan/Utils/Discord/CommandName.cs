@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IChan.Util.Discord
+namespace IChan.Utils.Discord
 {
     class CommandName
     {

@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DotNetEnv;
-using IChan.Datas;
-using NBitcoin.Protocol;
-
-namespace IChan
+﻿namespace IChan.Utils
 {
     static class DataManager
     {

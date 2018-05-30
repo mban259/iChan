@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using IChan.Util.Discord;
+using IChan.Utils.Discord;
 
 namespace IChan.Commands
 {
@@ -17,7 +17,7 @@ namespace IChan.Commands
         private readonly CommandService Commands;
         private readonly IServiceProvider Services;
         private readonly IdeaCommand IdeaCommand;
-        private readonly Regex IdeaRegex = new Regex($"^{CommandName.Prefix}{Util.Discord.CommandName.Idea}(( |\n)+?)(?<text>(\\w|\\W)*)$");
+        private readonly Regex IdeaRegex = new Regex($"^{CommandName.Prefix}{Utils.Discord.CommandName.Idea}(( |\n)+?)(?<text>(\\w|\\W)*)$");
 
         public CommandManager(DiscordSocketClient client, CommandService commands, IServiceProvider services)
         {

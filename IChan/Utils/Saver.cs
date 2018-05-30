@@ -8,8 +8,9 @@ using Newtonsoft.Json;
 using System.Data;
 using System.Xml.Serialization;
 using Discord;
+using IChan.Datas;
 
-namespace IChan.Datas
+namespace IChan.Utils
 {
     static class Saver
     {

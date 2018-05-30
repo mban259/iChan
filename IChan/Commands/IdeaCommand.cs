@@ -8,6 +8,7 @@ using Discord.Rest;
 using Discord.Rpc;
 using Discord.WebSocket;
 using IChan.Datas;
+using IChan.Utils;
 
 namespace IChan.Commands
 {

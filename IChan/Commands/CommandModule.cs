@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using IChan.Datas;
-using IChan.Util.Discord;
+using IChan.Utils.Discord;
 
 namespace IChan.Commands
 {

@@ -9,9 +9,10 @@ using Discord.WebSocket;
 using System.Reflection;
 using IChan.Commands;
 using Microsoft.Extensions.DependencyInjection;
-using IChan.Util.Discord;
+using IChan.Utils.Discord;
 using System.Data;
 using IChan.Datas;
+using IChan.Utils;
 
 namespace IChan
 {
