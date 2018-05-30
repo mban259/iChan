@@ -182,24 +182,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Data.cs" />
-    <Compile Include="Util\EnvManager.cs" />
-    <Compile Include="Util\SaveManager.cs" />
-    <Compile Include="Data\Idea.cs" />
-    <Compile Include="Data\Team.cs" />
-    <Compile Include="Data\User.cs" />
+    <Compile Include="Datas\Data.cs" />
+    <Compile Include="Utils\EnvManager.cs" />
+    <Compile Include="Datas\Idea.cs" />
+    <Compile Include="Datas\Team.cs" />
+    <Compile Include="Datas\User.cs" />
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\CommandModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Util\DataManager.cs" />
+    <Compile Include="Utils\DataManager.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Util\Discord\CommandName.cs" />
+    <Compile Include="Utils\Discord\CommandName.cs" />
     <Compile Include="Commands\IdeaCommand.cs" />
+    <Compile Include="Utils\Saver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

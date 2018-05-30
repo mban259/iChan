@@ -14,6 +14,7 @@ namespace IChan.Utils
         public static string SavedataDir { private set; get; }
         public static string SavedataFilename { private set; get; }
         public static string IdeaDataDir { private set; get; }
+        public static ulong TeamNotificationChannel { private set; get; }
         public static void GetEnv()
         {
             Env.Load();
@@ -22,6 +23,7 @@ namespace IChan.Utils
             SavedataDir = Env.GetString("SAVEDATA_DIR");
             SavedataFilename = Env.GetString("SAVEDATA_FILENAME");
             IdeaDataDir = Env.GetString("IDEADATA_DIR");
+            TeamNotificationChannel = ulong.Parse(Env.GetString("TEAM_NOTIFICATION_CHANNEL"));
         }
     }
 }
