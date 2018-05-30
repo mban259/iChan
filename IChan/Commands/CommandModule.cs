@@ -30,7 +30,7 @@ namespace IChan.Commands
         [Command(CommandName.CreateTeam)]
         public async Task CreateTeam(int ideaId)
         {
-
+            var team = new Team();
         }
 
         /// <summary>
@@ -47,10 +47,10 @@ namespace IChan.Commands
         /// <summary>
         /// 完成
         /// </summary>
-        /// <param name="ideaID"></param>
+        /// <param name="ideaId"></param>
         /// <returns></returns>
         [Command(CommandName.Complete)]
-        public async Task Complete(int ideaID)
+        public async Task Complete(int ideaId)
         {
 
         }

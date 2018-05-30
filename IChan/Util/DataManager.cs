@@ -16,7 +16,7 @@ namespace IChan
 
         private static void GetFileData()
         {
-            Data = SaveManager.LoadData(EnvManager.SavedataDir, $"{EnvManager.SavedataFilename}.json");
+            Data = Saver.LoadData(EnvManager.SavedataDir, $"{EnvManager.SavedataFilename}.json");
 
         }
         public static void GetData()
@@ -26,7 +26,7 @@ namespace IChan
 
         public static void SaveData()
         {
-            SaveManager.Save(Data, EnvManager.SavedataDir, $"{EnvManager.SavedataFilename}.json");
+            Saver.Save(Data, EnvManager.SavedataDir, $"{EnvManager.SavedataFilename}.json");
         }
     }
 }

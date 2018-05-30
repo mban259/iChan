@@ -11,7 +11,7 @@ using Discord;
 
 namespace IChan.Data
 {
-    static class SaveManager
+    static class Saver
     {
         private static readonly string CurrentDirectory = Environment.CurrentDirectory;
 
