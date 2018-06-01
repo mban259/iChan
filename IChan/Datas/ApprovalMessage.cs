@@ -14,13 +14,16 @@ namespace IChan.Datas
         public int TeamId;
         public ulong UserId;
         public string Address;
-        public ApprovalMessage(ulong messageId, int teamId)
+        public ApprovalMessage(ulong messageId, int teamId, ulong userId, string address)
         {
             MessageId = messageId;
             UpVoteReaction = new Emoji("👍");
             DownVoteReaction = new Emoji("👎");
             UpVote = 0;
             DownVote = 0;
+            TeamId = teamId;
+            UserId = userId;
+            Address = address;
         }
 
         public override void EndVote()

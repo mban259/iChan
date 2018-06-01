@@ -11,13 +11,14 @@ namespace IChan.Datas
     class IdeaVoteMessage : MonitorMessage
     {
         public int IdeaId;
-        public IdeaVoteMessage(ulong messageId)
+        public IdeaVoteMessage(ulong messageId, int ideaId)
         {
             MessageId = messageId;
             UpVoteReaction = new Emoji("👎");
             DownVoteReaction = new Emoji("👍");
             UpVote = 0;
             DownVote = 0;
+            IdeaId = ideaId;
         }
 
         public override void EndVote()

@@ -11,13 +11,14 @@ namespace IChan.Datas
     class CompleteVoteMessage : MonitorMessage
     {
         public int TeamId;
-        public CompleteVoteMessage(ulong messageId)
+        public CompleteVoteMessage(ulong messageId,int teamId)
         {
             MessageId = messageId;
             UpVoteReaction = new Emoji("👍");
             DownVoteReaction = new Emoji("👎");
             UpVote = 0;
             DownVote = 0;
+            TeamId = teamId;
         }
 
         public override void EndVote()
