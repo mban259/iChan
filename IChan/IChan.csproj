@@ -182,7 +182,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Datas\Applicant.cs" />
     <Compile Include="Datas\Data.cs" />
+    <Compile Include="Events\Reactions\ReactionManager.cs" />
     <Compile Include="Utils\EnvManager.cs" />
     <Compile Include="Datas\Idea.cs" />
     <Compile Include="Datas\Team.cs" />

@@ -13,6 +13,7 @@ using IChan.Utils.Discord;
 using System.Data;
 using IChan.Datas;
 using IChan.Utils;
+using IChan.Events.Reactions;
 
 namespace IChan
 {
@@ -23,6 +24,7 @@ namespace IChan
         public CommandService commands;
         public IServiceProvider services;
         private CommandManager CommandManager;
+        private ReactionManager ReactionManager;
 
         static void Main(string[] args)
         {
@@ -39,16 +41,24 @@ namespace IChan
             commands = new CommandService();
             services = new ServiceCollection().BuildServiceProvider();
             CommandManager = new CommandManager(client, commands, services);
+            ReactionManager = new ReactionManager(client);
         }
 
         public async Task MainAsync()
         {
             await StartUp();
             client.MessageReceived += CommandManager.CommandRecieved;
+            client.ReactionAdded += ReactionManager.ReactionAdded;
+            client.Ready += Ready;
             client.Log += Log;
             await commands.AddModulesAsync(Assembly.GetEntryAssembly());
             await DiscordStart();
             await Task.Delay(-1);
+        }
+
+        private async Task Ready()
+        {
+            
         }
 
         private Task Log(LogMessage message)

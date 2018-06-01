@@ -9,12 +9,12 @@ namespace IChan.Datas
     class Applicant
     {
         public User User;
-        public ulong Id;
+        public ulong MessageId;
 
-        public Applicant(User user, ulong id)
+        public Applicant(User user, ulong messageId)
         {
             User = user;
-            Id = id;
+            MessageId = messageId;
         }
     }
 }

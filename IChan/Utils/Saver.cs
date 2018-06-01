@@ -69,10 +69,17 @@ namespace IChan.Utils
             }
         }
 
+        public static bool TryLoadIdea(int ideaId, out Idea idea)
+        {
+            string name = $"{ideaId}.json";
+            string dir = $"{CurrentDirectory}\\{EnvManager.IdeaDataDir}";
+            return TryLoad(dir, name, out idea);
+        }
+
         public static bool TryLoadTeam(int teamid, out Team team)
         {
             string name = $"{teamid}.json";
-            string dir = $"{CurrentDirectory}\\{EnvManager.IdeaDataDir}";
+            string dir = $"{CurrentDirectory}\\{EnvManager.TeamDataDir}";
             return TryLoad(dir, name, out team);
         }
     }
