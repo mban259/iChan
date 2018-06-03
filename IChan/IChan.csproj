@@ -183,7 +183,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Datas\Applicant.cs" />
+    <Compile Include="Datas\ApprovalMessage.cs" />
     <Compile Include="Datas\Data.cs" />
+    <Compile Include="Datas\MonitorMessage.cs" />
+    <Compile Include="Datas\CompleteVoteMessage.cs" />
+    <Compile Include="Datas\IdeaVoteMessage.cs" />
     <Compile Include="Events\Reactions\ReactionManager.cs" />
     <Compile Include="Utils\EnvManager.cs" />
     <Compile Include="Datas\Idea.cs" />
