@@ -8,5 +8,6 @@ namespace iChan.Utils
     {
         internal const string Prefix = "./ichan ";
         internal const string Ping = "ping";
+        internal const string Idea = "idea";
     }
 }
