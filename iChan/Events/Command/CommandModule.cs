@@ -24,7 +24,7 @@ namespace iChan.Events.Command
             if (IdeaCommandManager.Instance.GetPhase(Context.User) == IdeaCommandPhase.None)
             {
                 IdeaCommandManager.Instance.AddPendingIdea(Context.User);
-                await IdeaCommandManager.Instance.RequestAddress(Context.User as SocketUser);
+                await IdeaCommandManager.Instance.RequestAddress(Context.User);
             }
             else if (!(Context as CommandContext).IsPrivate)
             {
