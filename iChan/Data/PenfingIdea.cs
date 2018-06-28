@@ -6,9 +6,9 @@ namespace iChan.Data
 {
     class PendingIdea
     {
-        public string Address { set; get; }
-        public string Title { set; get; }
-        public string Overview { set; get; }
-        public string Detail { set; get; }
+        internal string Address { set; get; }
+        internal string Title { set; get; }
+        internal string Overview { set; get; }
+        internal string Detail { set; get; }
     }
 }
