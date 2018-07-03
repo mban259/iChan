@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
+using iChan.API;
 using iChan.Data;
 using iChan.Utils;
 
@@ -93,6 +94,8 @@ namespace iChan.Events.Command
         {
             _ideaCommandPhases[user.Id] = IdeaCommandPhase.None;
 
+            var ideaId = IChanClient.Instance.AddIdea(user, idea);
+            await user.SendMessageAsync($"あいであ登録かんりょー id:{ideaId}");
         }
     }
 }

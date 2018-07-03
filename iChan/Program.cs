@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using iChan.API;
 using iChan.Events.Command;
 using iChan.Events.Reaction;
 using iChan.Utils;
@@ -15,6 +16,7 @@ namespace iChan
         private DiscordSocketClient _discordSocketClient;
         private MessageMonitor _messageMonitor;
         private ReactionMonitor _reactionMonitor;
+        private IChanClient _iChanClient;
         static void Main(string[] args)
         {
             var program = new Program();
@@ -26,8 +28,10 @@ namespace iChan
         internal void Awake()
         {
             _discordSocketClient = new DiscordSocketClient();
+            _iChanClient = new IChanClient();
             _messageMonitor = new MessageMonitor(_discordSocketClient);
             _reactionMonitor = new ReactionMonitor();
+
         }
 
         public void GetEvents()
