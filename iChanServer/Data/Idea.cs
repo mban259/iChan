@@ -1,19 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace iChanServer.Data
 {
     class Idea
     {
-        public string UserName;
-        public ulong UserId;
-        public string UserAddress;
-        public string Title;
-        public string Overview;
-        public string Detail;
-        public string IdeaAddress;
-        public long UnixTime;
+        [JsonProperty("id")]
         public int Id;
+        [JsonProperty("user")]
+        public User User;
+        [JsonProperty("title")]
+        public string Title;
+        [JsonProperty("overview")]
+        public string Overview;
+        [JsonProperty("detail")]
+        public string Detail;
+        [JsonProperty("address")]
+        public string IdeaAddress;
+        [JsonProperty("time")]
+        public long UnixTime;
+        [JsonProperty("completed")]
+        public bool Completed;
     }
 }

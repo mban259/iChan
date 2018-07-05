@@ -13,6 +13,7 @@ namespace iChanServer.Utils
         public static string MySqlPassword { get; }
         public static string MySqlServer { get; }
         public static string MySqlDatabase { get; }
+        public static int Port = 8888;
 
         static EnvManager()
         {

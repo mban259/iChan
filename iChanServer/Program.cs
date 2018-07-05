@@ -5,75 +5,62 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using iChanServer.CryptoCurrency;
+using iChanServer.Events;
 using iChanServer.MySql;
 using iChanServer.Utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
+using WebSocketSharp;
+using WebSocketSharp.Server;
 
 
 namespace iChanServer
 {
     class Program
     {
-        private TaskQueue _taskQueue;
-        private MethodManager _methodManager;
-        private MySqlClient _mySqlClient;
-        private XPC _xpc;
+        private readonly TaskQueue _taskQueue;
+        private readonly MethodManager _methodManager;
+        private readonly MySqlClient _mySqlClient;
+        private readonly WebSocketServer _webSocketServer;
+        private readonly XPC _xpc;
+        private readonly HttpListener _httpListener;
         static void Main(string[] args)
         {
             new Program().Start();
         }
 
+        internal Program()
+        {
+            _webSocketServer = new WebSocketServer(EnvManager.Port);
+            _webSocketServer.AddWebSocketService<IChanBehavior>("/");
+            _xpc = new XPC();
+            _httpListener = new HttpListener();
+            _taskQueue = new TaskQueue();
+            _mySqlClient = new MySqlClient();
+            _methodManager = new MethodManager(_mySqlClient, _webSocketServer.WebSocketServices, _xpc);
+
+        }
+
         internal void Start()
         {
             Debug.Log("start");
-            _xpc = new XPC();
-            _taskQueue = new TaskQueue();
-            _mySqlClient = new MySqlClient();
-            _methodManager = new MethodManager(_mySqlClient, _xpc);
-
+            _webSocketServer.Start();
             _taskQueue.Start();
-            using (HttpListener listener = new HttpListener())
+            //ﾍｲ! ﾘｯｽﾝ!
+            //とりあえずlocalhostだけ
+            //TODO 何らかの方法で認証 discordbot,iChan公式webサービスだけは全部 それ以外は[addidea]以外許可
+            //↑その人本人がその入力をしたことが証明できるならその限りではない
+            //TODO socketでサーバーからclientにも情報を送れるようにする
+            _httpListener.Prefixes.Add(EnvManager.UriPrefix);
+            _httpListener.Start();
+            Console.CancelKeyPress += CancelKeyPress;
+            while (true)
             {
-                //ﾍｲ! ﾘｯｽﾝ!
-                //とりあえずlocalhostだけ
-                //TODO 何らかの方法で認証 discordbot,iChan公式webサービスだけは全部 それ以外は[addidea]以外許可
-                //↑その人本人がその入力をしたことが証明できるならその限りではない
-                //TODO socketでサーバーからclientにも情報を送れるようにする
-                listener.Prefixes.Add(EnvManager.UriPrefix);
-                listener.Start();
-                Console.CancelKeyPress += CancelKeyPress;
-                while (true)
-                {
-                    var context = listener.GetContext();
-                    //ReceiveRequest()が終わらないと次のが始まらない
-                    //try-catchましましでだいじょーぶ?
-                    _taskQueue.Enqueue(() => ReceiveRequest(context));
-                }
-            }
-        }
-
-        private string Response(string request)
-        {
-            try
-            {
-                var jRequest = JsonConvert.DeserializeObject<JObject>(request);
-                string method = (string)jRequest["method"];
-                switch (method)
-                {
-                    case "ping":
-                        return _methodManager.Ping();
-                    case "addidea":
-                        return _methodManager.AddIdea(jRequest["params"]);
-                    default:
-                        return _methodManager.UnknownMethod(method);
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.Log(e.ToString());
-                return _methodManager.Failed("request failed");
+                var context = _httpListener.GetContext();
+                //ReceiveRequest()が終わらないと次のが始まらない
+                //try-catchましましでだいじょーぶ?
+                _taskQueue.Enqueue(() => ReceiveRequest(context));
             }
         }
 
@@ -85,9 +72,9 @@ namespace iChanServer
             {
                 requestText = sr.ReadToEnd();
             }
-            Debug.Log($"Receive \"{requestText}\" from {request.RemoteEndPoint}");
-            string responseText = Response(requestText);
-            Console.WriteLine($"Send {responseText}");
+            Debug.Log($"receive :{request}");
+            string responseText = _methodManager.Response(requestText);
+            Debug.Log($"send :{responseText}");
             try
             {
                 using (var response = context.Response)
@@ -106,7 +93,9 @@ namespace iChanServer
 
         private void CancelKeyPress(object sender, ConsoleCancelEventArgs e)
         {
+            _webSocketServer.Stop();
             _taskQueue.Stop();
+            _httpListener.Close();
             Debug.Log("exit");
         }
     }
