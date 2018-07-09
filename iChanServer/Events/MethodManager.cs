@@ -41,6 +41,9 @@ namespace iChanServer.Events
                     case "requestjointeam":
                         result = RequestJoinTeam((JObject)json["params"]);
                         break;
+                    case "requestcompleteidea":
+                        result = RequestCompleteIdea((JObject)json["params"]);
+                        break;
                     default:
                         result = UnknownMethod(method);
                         break;
@@ -82,6 +85,13 @@ namespace iChanServer.Events
             _mySqlClient.SaveRequestJoinTeamData(request);
             JObject broadcastData = MyJsonConverter.ToBroadcastRequestJoinTeamData(request);
             BroadcastObject("requestjointeam", broadcastData);
+            return Success("receiverequest");
+        }
+
+        internal JObject RequestCompleteIdea(JObject param)
+        {
+            int ideaId = _mySqlClient.GetIdeaId((int)param["teamid"]);
+            BroadcastObject("requestcompleteidea", ideaId);
             return Success("receiverequest");
         }
 

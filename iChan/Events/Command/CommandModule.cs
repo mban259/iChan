@@ -36,15 +36,43 @@ namespace iChan.Events.Command
         [Command(CommandString.CreateTeam)]
         internal async Task CreateTeam(int ideaId, string address)
         {
-            int teamId = IChanClient.Instance.CreateTeam(Context.User, ideaId, address);
-            await Context.Channel.SendMessageAsync($"ちーむさくせい　id:{teamId}");
+            var result = IChanClient.Instance.CreateTeam(Context.User, ideaId, address);
+            if ((bool)result["success"])
+            {
+                await Context.Channel.SendMessageAsync($"ちーむさくせい:{(int)result["result"]}");
+            }
+            else
+            {
+                await Context.Channel.SendMessageAsync("なんかあったよ");
+            }
         }
 
         [Command(CommandString.JoinTeam)]
         internal async Task JoinTeam(int teamId, string address)
         {
-            IChanClient.Instance.RequestJoinTeam(Context.User, teamId, address);
-            await Context.Channel.SendMessageAsync($"参加申請出したよ");
+            var result = IChanClient.Instance.RequestJoinTeam(Context.User, teamId, address);
+            if ((bool)result["success"])
+            {
+                await Context.Channel.SendMessageAsync($"参加申請出したよ");
+            }
+            else
+            {
+                await Context.Channel.SendMessageAsync("なんかあったよ");
+            }
+        }
+
+        [Command(CommandString.Complete)]
+        internal async Task Complete(int teamId)
+        {
+            var result = IChanClient.Instance.RequestCompleteIdea(Context.User, teamId);
+            if ((bool)result["success"])
+            {
+                await Context.Channel.SendMessageAsync("完成申請出したよ");
+            }
+            else
+            {
+                await Context.Channel.SendMessageAsync("なんかあったよ");
+            }
         }
     }
 }

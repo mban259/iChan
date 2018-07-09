@@ -44,7 +44,7 @@ namespace iChan.API
 
         }
 
-        internal int CreateTeam(IUser user, int ideaId, string leaderAddress)
+        internal JObject CreateTeam(IUser user, int ideaId, string leaderAddress)
         {
             JObject request = new JObject()
             {
@@ -60,11 +60,10 @@ namespace iChan.API
                     new JProperty("ideaid",ideaId)
                 })
             };
-            var result = InvokeMethod(request);
-            return (int)result["result"];
+            return InvokeMethod(request);
         }
 
-        internal void RequestJoinTeam(IUser user, int teamId, string address)
+        internal JObject RequestJoinTeam(IUser user, int teamId, string address)
         {
             JObject request = new JObject()
             {
@@ -80,7 +79,25 @@ namespace iChan.API
                     new JProperty("teamid",teamId)
                 })
             };
-            InvokeMethod(request);
+            return InvokeMethod(request);
+        }
+
+        internal JObject RequestCompleteIdea(IUser user, int teamId)
+        {
+            JObject request = new JObject()
+            {
+                new JProperty("method","requestcompleteidea"),
+                new JProperty("params",new JObject()
+                {
+                    new JProperty("user",new JObject()
+                    {
+                        new JProperty("userid",user.Id),
+                        new JProperty("name",user.Username),
+                    }),
+                    new JProperty("teamid",teamId)
+                })
+            };
+            return InvokeMethod(request);
         }
 
         private JObject InvokeMethod(JObject jObject)

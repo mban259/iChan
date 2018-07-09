@@ -11,5 +11,6 @@ namespace iChan.Utils
         internal const string Idea = "idea";
         internal const string CreateTeam = "createteam";
         internal const string JoinTeam = "jointeam";
+        internal const string Complete = "complete";
     }
 }

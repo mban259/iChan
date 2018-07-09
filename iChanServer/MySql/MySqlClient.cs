@@ -33,6 +33,11 @@ namespace iChanServer.MySql
             return 1;
         }
 
+        internal int GetIdeaId(int teamId)
+        {
+            return 2;
+        }
+
         internal void SaveRequestJoinTeamData(RequestJoinTeamData data)
         {
 
