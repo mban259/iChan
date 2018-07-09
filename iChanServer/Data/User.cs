@@ -5,14 +5,10 @@ using Newtonsoft.Json;
 
 namespace iChanServer.Data
 {
-    [JsonObject("user")]
     struct User
     {
-        [JsonProperty("id")]
-        public ulong Id;
-        [JsonProperty("name")]
+        public ulong UserId;
         public string UserName;
-        [JsonProperty("address")]
         public string Address;
     }
 }

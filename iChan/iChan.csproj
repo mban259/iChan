@@ -9,6 +9,7 @@
     <PackageReference Include="Discord.Net" Version="1.0.2" />
     <PackageReference Include="DotNetEnv" Version="1.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="WebSocketSharp" Version="1.0.3-rc11" />
   </ItemGroup>
 
 </Project>

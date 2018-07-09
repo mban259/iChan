@@ -6,15 +6,11 @@ using Newtonsoft.Json.Serialization;
 
 namespace iChanServer.Data
 {
-    class Idea
+    class Team
     {
-        public int IdeaId;
+        public int TeamId;
         public User User;
-        public string Title;
-        public string Overview;
-        public string Detail;
-        public string IdeaAddress;
+        public int IdeaId;
         public long UnixTime;
-        public bool Completed;
     }
 }

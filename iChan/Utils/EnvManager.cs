@@ -9,6 +9,7 @@ namespace iChan.Utils
     {
         internal static readonly string DiscordToken;
         internal static readonly string URI;
+        internal static readonly string WebsocketUri = "ws://localhost:8888";
 
         static EnvManager()
         {

@@ -28,6 +28,21 @@ namespace iChanServer.MySql
             return 0;
         }
 
+        internal int GetTeamCount()
+        {
+            return 1;
+        }
+
+        internal void SaveRequestJoinTeamData(RequestJoinTeamData data)
+        {
+
+        }
+
+        internal void SaveTeam(Team team)
+        {
+
+        }
+
 
         internal void SaveIdea(Idea idea)
         {

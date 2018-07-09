@@ -41,7 +41,15 @@ namespace iChanServer
                     {
                         return;
                     }
-                    action();
+
+                    try
+                    {
+                        action();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
                 }
             }
         }

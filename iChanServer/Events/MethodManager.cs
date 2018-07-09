@@ -33,7 +33,13 @@ namespace iChanServer.Events
                 switch (method)
                 {
                     case "addidea":
-                        result = AddIdea(json["params"]);
+                        result = AddIdea((JObject)json["params"]);
+                        break;
+                    case "createteam":
+                        result = CreateTeam((JObject)json["params"]);
+                        break;
+                    case "requestjointeam":
+                        result = RequestJoinTeam((JObject)json["params"]);
                         break;
                     default:
                         result = UnknownMethod(method);
@@ -50,24 +56,33 @@ namespace iChanServer.Events
             return result.ToString();
         }
 
-        internal JObject AddIdea(JToken token)
+        internal JObject CreateTeam(JObject param)
         {
-            var user = token["user"];
-            int id = _mySqlClient.GetIdeaCount();
-            Idea idea = new Idea()
-            {
-                Id = id,
-                User = JsonConvert.DeserializeObject<User>(user.ToString()),
-                Title = (string)token["title"],
-                Overview = (string)token["overview"],
-                Detail = (string)token["detail"],
-                Completed = false,
-                IdeaAddress = _xpc.GetAddress(id),
-                UnixTime = UnixTime.NowUnixTime()
-            };
+            int teamid = _mySqlClient.GetTeamCount();
+            var team = MyJsonConverter.ToTeam(param, teamid);
+            _mySqlClient.SaveTeam(team);
+            JObject broadcastData = MyJsonConverter.ToBroadcastTeam(team);
+            BroadcastObject("newteam", broadcastData);
+            return Success(teamid);
+        }
+
+        internal JObject AddIdea(JObject param)
+        {
+            int ideaId = _mySqlClient.GetIdeaCount();
+            var idea = MyJsonConverter.ToIdea(param, ideaId, _xpc.GetAddress(ideaId));
             _mySqlClient.SaveIdea(idea);
-            BroadcastObject("newidea", JsonConvert.SerializeObject(idea));
-            return Success(id);
+            JObject broadcastData = MyJsonConverter.ToBroadcastJIdea(idea);
+            BroadcastObject("newidea", broadcastData);
+            return Success(ideaId);
+        }
+
+        internal JObject RequestJoinTeam(JObject param)
+        {
+            var request = MyJsonConverter.ToRequestJoinTeamData(param);
+            _mySqlClient.SaveRequestJoinTeamData(request);
+            JObject broadcastData = MyJsonConverter.ToBroadcastRequestJoinTeamData(request);
+            BroadcastObject("requestjointeam", broadcastData);
+            return Success("receiverequest");
         }
 
         internal void BroadcastObject(string type, object data)

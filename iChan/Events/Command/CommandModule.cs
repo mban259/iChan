@@ -6,6 +6,7 @@ using Discord;
 using Discord.Commands;
 using Discord.Commands.Builders;
 using Discord.WebSocket;
+using iChan.API;
 using iChan.Utils;
 
 namespace iChan.Events.Command
@@ -30,6 +31,20 @@ namespace iChan.Events.Command
             {
                 await Context.Channel.SendMessageAsync($"{Context.User.Mention} アイデア登録中だよ");
             }
+        }
+
+        [Command(CommandString.CreateTeam)]
+        internal async Task CreateTeam(int ideaId, string address)
+        {
+            int teamId = IChanClient.Instance.CreateTeam(Context.User, ideaId, address);
+            await Context.Channel.SendMessageAsync($"ちーむさくせい　id:{teamId}");
+        }
+
+        [Command(CommandString.JoinTeam)]
+        internal async Task JoinTeam(int teamId, string address)
+        {
+            IChanClient.Instance.RequestJoinTeam(Context.User, teamId, address);
+            await Context.Channel.SendMessageAsync($"参加申請出したよ");
         }
     }
 }

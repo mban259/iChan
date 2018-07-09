@@ -7,6 +7,7 @@ using Discord.WebSocket;
 using iChan.API;
 using iChan.Events.Command;
 using iChan.Events.Reaction;
+using iChan.Events.Socket;
 using iChan.Utils;
 
 namespace iChan
@@ -17,6 +18,7 @@ namespace iChan
         private MessageMonitor _messageMonitor;
         private ReactionMonitor _reactionMonitor;
         private IChanClient _iChanClient;
+        private WebSocketMonitor _webSocketMonitor;
         static void Main(string[] args)
         {
             var program = new Program();
@@ -31,6 +33,7 @@ namespace iChan
             _iChanClient = new IChanClient();
             _messageMonitor = new MessageMonitor(_discordSocketClient);
             _reactionMonitor = new ReactionMonitor();
+            _webSocketMonitor = new WebSocketMonitor();
 
         }
 

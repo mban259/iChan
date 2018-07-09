@@ -54,6 +54,7 @@ namespace iChan.Events.Command
             if (!(message.HasStringPrefix(CommandString.Prefix, ref argPos))) return;
 
             var result = await CommandService.ExecuteAsync(context, argPos, ServiceProvider);
+            Console.WriteLine(result);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace iChan.API
             {
                 new JProperty("user",new JObject()
                 {
-                    new JProperty("id",user.Id),
+                    new JProperty("userid",user.Id),
                     new JProperty("name",user.Username),
                     new JProperty("address",idea.Address)
                 }),
@@ -42,6 +42,45 @@ namespace iChan.API
         internal void Ping()
         {
 
+        }
+
+        internal int CreateTeam(IUser user, int ideaId, string leaderAddress)
+        {
+            JObject request = new JObject()
+            {
+                new JProperty("method","createteam"),
+                new JProperty("params",new JObject()
+                {
+                    new JProperty("user",new JObject()
+                    {
+                        new JProperty("userid",user.Id),
+                        new JProperty("name",user.Username),
+                        new JProperty("address",leaderAddress)
+                    }),
+                    new JProperty("ideaid",ideaId)
+                })
+            };
+            var result = InvokeMethod(request);
+            return (int)result["result"];
+        }
+
+        internal void RequestJoinTeam(IUser user, int teamId, string address)
+        {
+            JObject request = new JObject()
+            {
+                new JProperty("method","requestjointeam"),
+                new JProperty("params",new JObject()
+                {
+                    new JProperty("user",new JObject()
+                    {
+                        new JProperty("userid",user.Id),
+                        new JProperty("name",user.Username),
+                        new JProperty("address",address)
+                    }),
+                    new JProperty("teamid",teamId)
+                })
+            };
+            InvokeMethod(request);
         }
 
         private JObject InvokeMethod(JObject jObject)
