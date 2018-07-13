@@ -32,7 +32,7 @@ namespace iChanServer
 
         internal Program()
         {
-            _webSocketServer = new WebSocketServer(EnvManager.Port);
+            _webSocketServer = new WebSocketServer(EnvManager.WebSocketPort);
             _webSocketServer.AddWebSocketService<IChanBehavior>("/");
             _xpc = new XPC();
             _httpListener = new HttpListener();
@@ -47,6 +47,7 @@ namespace iChanServer
             Debug.Log("start");
             _webSocketServer.Start();
             _taskQueue.Start();
+            _mySqlClient.Connect();
             //ﾍｲ! ﾘｯｽﾝ!
             //とりあえずlocalhostだけ
             //TODO 何らかの方法で認証 discordbot,iChan公式webサービスだけは全部 それ以外は[addidea]以外許可

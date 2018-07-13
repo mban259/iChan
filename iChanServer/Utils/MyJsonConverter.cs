@@ -38,6 +38,7 @@ namespace iChanServer.Utils
         {
             return new JObject()
             {
+                new JProperty("requestid",request.RequestId),
                 new JProperty("user",ToBroadcastJUser(request.User)),
                 new JProperty("teamid",request.TeamId),
                 new JProperty("time",UnixTime.NowUnixTime()),
@@ -45,16 +46,14 @@ namespace iChanServer.Utils
             };
         }
 
-        internal static Idea ToIdea(JObject jReceiveIdea, int ideaId, string ideaAddress)
+        internal static Idea ToIdea(JObject jReceiveIdea)
         {
             return new Idea()
             {
-                IdeaId = ideaId,
                 User = ToUser((JObject)jReceiveIdea["user"]),
                 Title = (string)jReceiveIdea["title"],
                 Overview = (string)jReceiveIdea["overview"],
                 Detail = (string)jReceiveIdea["detail"],
-                IdeaAddress = ideaAddress,
                 UnixTime = UnixTime.NowUnixTime(),
                 Completed = false
             };
@@ -70,11 +69,10 @@ namespace iChanServer.Utils
             };
         }
 
-        internal static Team ToTeam(JObject jReceiveparam, int teamId)
+        internal static Team ToTeam(JObject jReceiveparam)
         {
             return new Team()
             {
-                TeamId = teamId,
                 User = ToUser((JObject)jReceiveparam["user"]),
                 IdeaId = (int)jReceiveparam["ideaid"],
                 UnixTime = UnixTime.NowUnixTime()

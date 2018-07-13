@@ -8,6 +8,7 @@ using iChan.API;
 using iChan.Events.Command;
 using iChan.Events.Reaction;
 using iChan.Events.Socket;
+using iChan.MySql;
 using iChan.Utils;
 
 namespace iChan
@@ -19,6 +20,8 @@ namespace iChan
         private ReactionMonitor _reactionMonitor;
         private IChanClient _iChanClient;
         private WebSocketMonitor _webSocketMonitor;
+        private ApprovalJoinTeam _approvalJoinTeam;
+        private MySqlClient _mySqlClient;
         static void Main(string[] args)
         {
             var program = new Program();
@@ -32,8 +35,11 @@ namespace iChan
             _discordSocketClient = new DiscordSocketClient();
             _iChanClient = new IChanClient();
             _messageMonitor = new MessageMonitor(_discordSocketClient);
-            _reactionMonitor = new ReactionMonitor();
-            _webSocketMonitor = new WebSocketMonitor();
+            _approvalJoinTeam = new ApprovalJoinTeam();
+            _reactionMonitor = new ReactionMonitor(_approvalJoinTeam);
+
+            _mySqlClient = new MySqlClient();
+            _webSocketMonitor = new WebSocketMonitor(_discordSocketClient, _mySqlClient, _approvalJoinTeam);
 
         }
 
@@ -43,6 +49,15 @@ namespace iChan
             _discordSocketClient.Log += Log;
             _discordSocketClient.ReactionAdded += _reactionMonitor.ReactionAdded;
             _discordSocketClient.ReactionRemoved += _reactionMonitor.ReactionRemoved;
+            _discordSocketClient.Ready += Ready;
+        }
+
+        private async Task Ready()
+        {
+            var g = _discordSocketClient.GetGuild(393028721923063808);
+            var c = g.GetTextChannel(450023560677818369);
+            _webSocketMonitor.AddNewIdeaNotificationChannel(c);
+            await c.SendMessageAsync("aaaaa");
         }
 
         internal async Task MainAsync()

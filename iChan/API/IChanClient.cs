@@ -16,6 +16,17 @@ namespace iChan.API
     class IChanClient
     {
         internal static readonly IChanClient Instance = new IChanClient();
+
+        internal User GetTeamLeader(int teamId)
+        {
+            return new User()
+            {
+                Address = null,
+                UserId = 392568520501624832,
+                UserName = "mban"
+            };
+        }
+
         internal int AddIdea(IUser user, PendingIdea idea)
         {
             JObject jIdea = new JObject()
@@ -59,6 +70,16 @@ namespace iChan.API
                     }),
                     new JProperty("ideaid",ideaId)
                 })
+            };
+            return InvokeMethod(request);
+        }
+
+        internal JObject ApprovalJoinTeam(int requestId)
+        {
+            JObject request = new JObject()
+            {
+                new JProperty("method","approvalrequestjointeam"),
+                new JProperty("params",requestId)
             };
             return InvokeMethod(request);
         }

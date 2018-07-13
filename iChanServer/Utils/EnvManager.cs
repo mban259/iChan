@@ -8,12 +8,12 @@ namespace iChanServer.Utils
 {
     static class EnvManager
     {
-        public static string UriPrefix { get; }
-        public static string MySqlUserId { get; }
-        public static string MySqlPassword { get; }
-        public static string MySqlServer { get; }
-        public static string MySqlDatabase { get; }
-        public static int Port = 8888;
+        public static readonly string UriPrefix;
+        public static readonly string MySqlUserId;
+        public static readonly string MySqlPassword;
+        public static readonly string MySqlServer;
+        public static readonly string MySqlDatabase;
+        public static readonly int WebSocketPort;
 
         static EnvManager()
         {
@@ -23,6 +23,7 @@ namespace iChanServer.Utils
             MySqlPassword = Env.GetString("MYSQL_PASSWORD");
             MySqlServer = Env.GetString("MYSQL_SERVER");
             MySqlDatabase = Env.GetString("MYSQL_DATABASE");
+            WebSocketPort = Env.GetInt("WEBSOCKET_PORT");
         }
     }
 }

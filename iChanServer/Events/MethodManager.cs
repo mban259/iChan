@@ -44,6 +44,9 @@ namespace iChanServer.Events
                     case "requestcompleteidea":
                         result = RequestCompleteIdea((JObject)json["params"]);
                         break;
+                    case "approvalrequestjointeam":
+                        result = ApprovalRequestJoinTeam((int)json["params"]);
+                        break;
                     default:
                         result = UnknownMethod(method);
                         break;
@@ -59,22 +62,39 @@ namespace iChanServer.Events
             return result.ToString();
         }
 
+        internal JObject ApprovalRequestJoinTeam(int param)
+        {
+            var b = _mySqlClient.ApprovalJoinTeam(param);
+            if (b)
+            {
+                return Success(b);
+            }
+            else
+            {
+                return Failed("something happend");
+            }
+        }
+
         internal JObject CreateTeam(JObject param)
         {
-            int teamid = _mySqlClient.GetTeamCount();
-            var team = MyJsonConverter.ToTeam(param, teamid);
-            _mySqlClient.SaveTeam(team);
+            var team = MyJsonConverter.ToTeam(param);
+            int teamId = _mySqlClient.SaveTeam(team);
+            team.TeamId = teamId;
             JObject broadcastData = MyJsonConverter.ToBroadcastTeam(team);
             BroadcastObject("newteam", broadcastData);
-            return Success(teamid);
+            return Success(teamId);
         }
 
         internal JObject AddIdea(JObject param)
         {
-            int ideaId = _mySqlClient.GetIdeaCount();
-            var idea = MyJsonConverter.ToIdea(param, ideaId, _xpc.GetAddress(ideaId));
-            _mySqlClient.SaveIdea(idea);
+            var idea = MyJsonConverter.ToIdea(param);
+            int ideaId = _mySqlClient.SaveIdea(idea);
+            Console.WriteLine(ideaId);
+            _mySqlClient.SaveIdeaAddress(ideaId, _xpc.GetAddress(ideaId));
+            idea.IdeaId = ideaId;
+            idea.IdeaAddress = _xpc.GetAddress(ideaId);
             JObject broadcastData = MyJsonConverter.ToBroadcastJIdea(idea);
+            Console.WriteLine(broadcastData);
             BroadcastObject("newidea", broadcastData);
             return Success(ideaId);
         }
@@ -82,7 +102,8 @@ namespace iChanServer.Events
         internal JObject RequestJoinTeam(JObject param)
         {
             var request = MyJsonConverter.ToRequestJoinTeamData(param);
-            _mySqlClient.SaveRequestJoinTeamData(request);
+            int requestId = _mySqlClient.SaveRequestJoinTeamData(request);
+            request.RequestId = requestId;
             JObject broadcastData = MyJsonConverter.ToBroadcastRequestJoinTeamData(request);
             BroadcastObject("requestjointeam", broadcastData);
             return Success("receiverequest");
